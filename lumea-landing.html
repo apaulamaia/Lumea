@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Luméa — Cosméticos Naturais</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --white:#ffffff;--gray-50:#f9f9f8;--gray-100:#f0efed;--gray-200:#e4e2de;
+    --gray-400:#a8a49e;--gray-600:#6b6762;--gray-900:#2a2825;
+    --accent:#c8b89a;--accent-light:#e8ddd0;
+  }
+  body{font-family:'Georgia',serif;color:var(--gray-900);background:var(--white);overflow-x:hidden}
+  a{text-decoration:none;color:inherit}
+
+  /* NAV */
+  nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);z-index:100;padding:18px 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-200)}
+  .logo{font-size:1.6rem;letter-spacing:0.15em;font-style:italic;color:var(--gray-900)}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:32px;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;font-family:sans-serif;color:var(--gray-600)}
+  .nav-links a:hover{color:var(--gray-900)}
+  .cart-btn{position:relative;background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--gray-900)}
+  .cart-count{position:absolute;top:-6px;right:-8px;background:var(--gray-900);color:white;border-radius:50%;width:18px;height:18px;font-size:0.65rem;display:flex;align-items:center;justify-content:center;font-family:sans-serif}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--gray-50) 0%,var(--accent-light) 100%);text-align:center;padding:120px 20px 60px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(200,184,154,0.2),transparent 70%);top:10%;left:-100px}
+  .hero::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(200,184,154,0.15),transparent 70%);bottom:5%;right:-80px}
+  .hero-tag{font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;font-family:sans-serif;color:var(--gray-400);margin-bottom:20px}
+  .hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:400;line-height:1.1;margin-bottom:24px;color:var(--gray-900)}
+  .hero h1 em{color:var(--accent);font-style:italic}
+  .hero p{font-size:1.05rem;color:var(--gray-600);max-width:480px;margin:0 auto 40px;line-height:1.8;font-family:sans-serif}
+  .btn-primary{display:inline-block;background:var(--gray-900);color:white;padding:16px 40px;font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;font-family:sans-serif;border:none;cursor:pointer;transition:background 0.3s}
+  .btn-primary:hover{background:var(--gray-600)}
+  .btn-outline{display:inline-block;border:1px solid var(--gray-900);color:var(--gray-900);padding:15px 40px;font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;font-family:sans-serif;background:none;cursor:pointer;transition:all 0.3s;margin-left:16px}
+  .btn-outline:hover{background:var(--gray-900);color:white}
+
+  /* ABOUT */
+  .about{padding:100px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto}
+  .about-img{width:100%;height:420px;background:linear-gradient(160deg,var(--gray-100),var(--accent-light));border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:5rem}
+  .about-text .tag{font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;font-family:sans-serif;color:var(--accent);margin-bottom:16px}
+  .about-text h2{font-size:2.2rem;font-weight:400;line-height:1.3;margin-bottom:20px}
+  .about-text p{color:var(--gray-600);line-height:1.9;font-family:sans-serif;font-size:0.95rem;margin-bottom:16px}
+  .values{display:flex;gap:24px;margin-top:32px}
+  .val{text-align:center}
+  .val-icon{font-size:1.5rem;margin-bottom:8px}
+  .val span{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;font-family:sans-serif;color:var(--gray-600)}
+
+  /* PRODUCTS */
+  .products{background:var(--gray-50);padding:100px 60px}
+  .section-header{text-align:center;margin-bottom:60px}
+  .section-header .tag{font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;font-family:sans-serif;color:var(--accent);margin-bottom:12px}
+  .section-header h2{font-size:2.2rem;font-weight:400}
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;max-width:1100px;margin:0 auto}
+  .product-card{background:white;padding:0 0 24px;cursor:pointer;transition:transform 0.3s,box-shadow 0.3s}
+  .product-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
+  .product-img{width:100%;height:240px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;margin-bottom:20px;transition:background 0.3s}
+  .product-info{padding:0 20px}
+  .product-name{font-size:1rem;margin-bottom:6px;font-weight:400}
+  .product-desc{font-size:0.8rem;color:var(--gray-400);font-family:sans-serif;margin-bottom:14px;line-height:1.6}
+  .product-footer{display:flex;align-items:center;justify-content:space-between}
+  .product-price{font-size:1.05rem;color:var(--gray-900)}
+  .add-btn{background:var(--gray-900);color:white;border:none;padding:8px 16px;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;font-family:sans-serif;cursor:pointer;transition:background 0.3s}
+  .add-btn:hover{background:var(--accent)}
+  .add-btn.added{background:var(--accent)}
+
+  /* TESTIMONIALS */
+  .testimonials{padding:100px 60px;max-width:1000px;margin:0 auto;text-align:center}
+  .testimonials h2{font-size:2rem;font-weight:400;margin-bottom:60px}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  .testi-card{background:var(--gray-50);padding:32px;text-align:left}
+  .stars{color:var(--accent);font-size:0.9rem;margin-bottom:14px}
+  .testi-text{font-size:0.9rem;color:var(--gray-600);font-family:sans-serif;line-height:1.8;margin-bottom:18px;font-style:italic}
+  .testi-author{font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;font-family:sans-serif;color:var(--gray-400)}
+
+  /* NEWSLETTER */
+  .newsletter{background:var(--gray-900);color:white;padding:80px 60px;text-align:center}
+  .newsletter h2{font-size:2rem;font-weight:400;margin-bottom:12px}
+  .newsletter p{color:var(--gray-400);font-family:sans-serif;margin-bottom:36px}
+  .newsletter-form{display:flex;gap:0;max-width:420px;margin:0 auto}
+  .newsletter-form input{flex:1;padding:14px 20px;border:1px solid var(--gray-600);background:transparent;color:white;font-family:sans-serif;font-size:0.9rem;outline:none}
+  .newsletter-form input::placeholder{color:var(--gray-400)}
+  .newsletter-form button{padding:14px 28px;background:var(--accent);color:white;border:none;cursor:pointer;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;font-family:sans-serif}
+
+  /* FOOTER */
+  footer{background:var(--gray-900);color:var(--gray-400);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.05);font-family:sans-serif;font-size:0.8rem}
+  .footer-links{display:flex;gap:24px}
+  .footer-links a:hover{color:white}
+
+  /* CART DRAWER */
+  .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;opacity:0;pointer-events:none;transition:opacity 0.3s}
+  .cart-overlay.open{opacity:1;pointer-events:all}
+  .cart-drawer{position:fixed;right:0;top:0;height:100%;width:400px;background:white;z-index:201;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column}
+  .cart-drawer.open{transform:translateX(0)}
+  .cart-header{padding:28px 32px;border-bottom:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center}
+  .cart-header h3{font-size:1.1rem;font-weight:400;letter-spacing:0.05em}
+  .close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gray-600)}
+  .cart-items{flex:1;overflow-y:auto;padding:24px 32px}
+  .cart-empty{text-align:center;color:var(--gray-400);font-family:sans-serif;font-size:0.9rem;margin-top:60px}
+  .cart-empty .empty-icon{font-size:3rem;margin-bottom:16px}
+  .cart-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--gray-100)}
+  .cart-item-img{width:64px;height:64px;background:var(--gray-50);display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+  .cart-item-info{flex:1}
+  .cart-item-name{font-size:0.9rem;margin-bottom:4px}
+  .cart-item-price{font-size:0.85rem;color:var(--gray-600);font-family:sans-serif}
+  .cart-item-qty{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .qty-btn{background:var(--gray-100);border:none;width:26px;height:26px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+  .qty-num{font-family:sans-serif;font-size:0.9rem}
+  .remove-btn{background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:0.75rem;font-family:sans-serif;margin-left:auto;align-self:flex-start}
+  .cart-footer{padding:24px 32px;border-top:1px solid var(--gray-200)}
+  .cart-total{display:flex;justify-content:space-between;font-size:1rem;margin-bottom:20px}
+  .cart-total span:last-child{font-weight:600}
+  .checkout-btn{width:100%;background:var(--gray-900);color:white;border:none;padding:18px;font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;font-family:sans-serif;cursor:pointer;transition:background 0.3s}
+  .checkout-btn:hover{background:var(--gray-600)}
+
+  @media(max-width:768px){
+    nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hero{padding:100px 20px 60px}
+    .about{grid-template-columns:1fr;padding:60px 20px;gap:40px}
+    .products{padding:60px 20px}
+    .products-grid{grid-template-columns:repeat(2,1fr)}
+    .testi-grid{grid-template-columns:1fr}
+    .testimonials{padding:60px 20px}
+    .newsletter{padding:60px 20px}
+    footer{flex-direction:column;gap:16px;text-align:center;padding:32px 20px}
+    .cart-drawer{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Lum<span>é</span>a</div>
+  <div class="nav-links">
+    <a href="#">Início</a>
+    <a href="#">Produtos</a>
+    <a href="#">Sobre</a>
+    <a href="#">Contacto</a>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">🛍️<span class="cart-count" id="cartCount">0</span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="hero-tag">✦ Cosméticos Naturais &amp; Orgânicos</p>
+    <h1>A beleza que <em>nasce</em><br>da natureza</h1>
+    <p>Fórmulas puras, ingredientes orgânicos e rituais de cuidado que respeitam a tua pele e o planeta.</p>
+    <button class="btn-primary" onclick="document.querySelector('.products').scrollIntoView({behavior:'smooth'})">Descobrir Produtos</button>
+    <button class="btn-outline" onclick="document.querySelector('.about').scrollIntoView({behavior:'smooth'})">A Nossa História</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img">🌿</div>
+  <div class="about-text">
+    <p class="tag">✦ Sobre a Luméa</p>
+    <h2>Ingredientes honestos,<br>resultados reais</h2>
+    <p>A Luméa nasceu da crença de que a beleza verdadeira é simples. Cada produto é formulado com ingredientes botânicos cuidadosamente selecionados, sem químicos desnecessários.</p>
+    <p>Somos certificados orgânicos, cruelty-free e comprometidos com embalagens sustentáveis.</p>
+    <div class="values">
+      <div class="val"><div class="val-icon">🌱</div><span>100% Natural</span></div>
+      <div class="val"><div class="val-icon">🐰</div><span>Cruelty-Free</span></div>
+      <div class="val"><div class="val-icon">♻️</div><span>Sustentável</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products">
+  <div class="section-header">
+    <p class="tag">✦ Os Nossos Produtos</p>
+    <h2>Cuida da tua pele, naturalmente</h2>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <h2>O que dizem as nossas clientes</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"A minha pele nunca esteve tão bem. O sérum é absolutamente incrível, absorve em segundos e ilumina!"</p>
+      <p class="testi-author">— Mariana S., Lisboa</p>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Finalmente uma marca que usa ingredientes que reconheço. O creme hidratante é o melhor que já experimentei."</p>
+      <p class="testi-author">— Ana F., Porto</p>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Adoro a filosofia da Luméa. Produtos eficazes, embalagens bonitas e entrega super rápida. Já sou cliente fiel!"</p>
+      <p class="testi-author">— Beatriz M., Braga</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Junta-te à família Luméa</h2>
+  <p>Recebe dicas de skincare, novidades e 10% de desconto na primeira encomenda.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="O teu email..."/>
+    <button>Subscrever</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo" style="color:#a8a49e;font-size:1.2rem">Luméa</div>
+  <div class="footer-links">
+    <a href="#">Privacidade</a>
+    <a href="#">Termos</a>
+    <a href="#">Envios</a>
+    <a href="#">Instagram</a>
+  </div>
+  <span>© 2025 Luméa. Todos os direitos reservados.</span>
+</footer>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>O teu carrinho</h3>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="empty-icon">🛍️</div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">0,00 €</span></div>
+    <button class="checkout-btn">Finalizar Compra</button>
+  </div>
+</div>
+
+<script>
+const products = [
+  {id:1,name:'Sérum Iluminador',desc:'Vitamina C + Ácido Hialurónico',price:38,emoji:'✨',bg:'#f5f0e8'},
+  {id:2,name:'Creme Hidratante',desc:'Aloe Vera + Esqualano',price:32,emoji:'🌸',bg:'#f0ede8'},
+  {id:3,name:'Óleo Facial',desc:'Rosa Mosqueta + Jojoba',price:45,emoji:'🌹',bg:'#ede8e0'},
+  {id:4,name:'Esfoliante Suave',desc:'Açúcar + Óleo de Coco',price:28,emoji:'🌾',bg:'#ede9e3'},
+  {id:5,name:'Contorno de Olhos',desc:'Cafeína + Péptidos',price:42,emoji:'💧',bg:'#e8edef'},
+  {id:6,name:'Máscara Facial',desc:'Argila + Carvão Ativo',price:26,emoji:'🍃',bg:'#e8ede9'},
+  {id:7,name:'Tónico Floral',desc:'Água de Rosas + Niacinamida',price:24,emoji:'🌺',bg:'#ede8ec'},
+  {id:8,name:'Protetor Solar',desc:'SPF 50 + Antioxidantes',price:36,emoji:'☀️',bg:'#ede9e0'},
+];
+
+let cart = [];
+
+// Render products
+const grid = document.getElementById('productsGrid');
+products.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.innerHTML = `
+    <div class="product-img" style="background:${p.bg}">${p.emoji}</div>
+    <div class="product-info">
+      <p class="product-name">${p.name}</p>
+      <p class="product-desc">${p.desc}</p>
+      <div class="product-footer">
+        <span class="product-price">${p.price},00 €</span>
+        <button class="add-btn" id="btn-${p.id}" onclick="addToCart(${p.id})">+ Adicionar</button>
+      </div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if(existing) existing.qty++;
+  else cart.push({...p, qty:1});
+  updateCart();
+  const btn = document.getElementById('btn-'+id);
+  btn.textContent = '✓ Adicionado';
+  btn.classList.add('added');
+  setTimeout(() => {btn.textContent='+ Adicionar';btn.classList.remove('added')}, 1500);
+  openCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCart();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(x => x.id === id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
+  updateCart();
+}
+
+function updateCart() {
+  const total = cart.reduce((s, x) => s + x.price * x.qty, 0);
+  const count = cart.reduce((s, x) => s + x.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if(cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="empty-icon">🛍️</div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>';
+    footerEl.style.display = 'none';
+    return;
+  }
+  footerEl.style.display = 'block';
+  document.getElementById('cartTotal').textContent = total.toFixed(2).replace('.',',') + ' €';
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img" style="background:${item.bg}">${item.emoji}</div>
+      <div class="cart-item-info">
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-price">${item.price},00 €</p>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          <button class="remove-btn" onclick="removeFromCart(${item.id})">Remover</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleCart() {
+  const overlay = document.getElementById('cartOverlay');
+  const drawer = document.getElementById('cartDrawer');
+  overlay.classList.toggle('open');
+  drawer.classList.toggle('open');
+}
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+}
+</script>
+</body>
+</html>
