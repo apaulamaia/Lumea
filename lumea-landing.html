@@ -140,7 +140,7 @@
     <a href="#">Sobre</a>
     <a href="#">Contacto</a>
   </div>
-  <button class="cart-btn" onclick="toggleCart()"><span class="cart-count" id="cartCount">0</span></button>
+  <button class="cart-btn" onclick="toggleCart()">🛍️<span class="cart-count" id="cartCount">0</span></button>
 </nav>
 
 <!-- HERO -->
@@ -231,7 +231,7 @@
     <button class="close-btn" onclick="toggleCart()">✕</button>
   </div>
   <div class="cart-items" id="cartItems">
-    <div class="cart-empty"><div class="empty-icon"></div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>
+    <div class="cart-empty"><div class="empty-icon">🛍️</div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>
   </div>
   <div class="cart-footer" id="cartFooter" style="display:none">
     <div class="cart-total"><span>Total</span><span id="cartTotal">0,00 €</span></div>
@@ -304,7 +304,7 @@ function updateCart() {
   const itemsEl = document.getElementById('cartItems');
   const footerEl = document.getElementById('cartFooter');
   if(cart.length === 0) {
-    itemsEl.innerHTML = '<div class="cart-empty"><div class="empty-icon"></div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>';
+    itemsEl.innerHTML = '<div class="cart-empty"><div class="empty-icon">🛍️</div><p>O teu carrinho está vazio.<br>Adiciona alguns produtos!</p></div>';
     footerEl.style.display = 'none';
     return;
   }
